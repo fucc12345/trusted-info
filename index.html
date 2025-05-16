@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trusted Info</title>
 
-  <!-- Custom Google Fonts -->
+  <!-- Google Fonts -->
   <style>
     @font-face {
       font-family: 'Roboto';
@@ -22,19 +22,13 @@
   </style>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
     body {
       font-family: 'Roboto', sans-serif;
       background: linear-gradient(to right, #f0f2f5, #dbe4f0);
       color: #333;
-      line-height: 1.6;
       overflow-x: hidden;
-      transition: background 0.3s, color 0.3s;
     }
 
     body.dark {
@@ -42,59 +36,52 @@
       color: #f0f0f0;
     }
 
-    #time-display {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      font-size: 1rem;
-      font-family: 'RobotoMedium';
-      background: rgba(255, 255, 255, 0.6);
-      padding: 0.3rem 0.7rem;
-      border-radius: 8px;
-      z-index: 999;
-    }
-
-    body.dark #time-display {
-      background: rgba(0, 0, 0, 0.6);
-    }
-
-    .dark-toggle {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 0.9rem;
-      font-family: 'RobotoMedium';
-      background: #1f4037;
-      color: white;
-      border: none;
-      padding: 0.4rem 0.8rem;
-      border-radius: 8px;
-      cursor: pointer;
-      z-index: 999;
-    }
-
-    .dark-toggle:hover {
-      background: #16342c;
-    }
-
     header {
       background: linear-gradient(to right, #1f4037, #99f2c8);
       color: white;
-      padding: 2.5rem 1rem;
+      padding: 2rem 1rem;
       text-align: center;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
       position: relative;
     }
 
     header h1 {
-      font-size: 3rem;
+      font-size: 2.5rem;
       font-family: 'GoogleSans', sans-serif;
-      margin-bottom: 0.5rem;
+      animation: typing 4s steps(20) 1s 1 normal both;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid white;
     }
 
     header p {
-      font-size: 1.2rem;
-      font-family: 'RobotoMedium', sans-serif;
+      font-size: 1.1rem;
+      font-family: 'RobotoMedium';
+      margin-top: 0.5rem;
+    }
+
+    #time-display {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 0.4rem 0.7rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      z-index: 9999;
+    }
+
+    .dark-toggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      padding: 0.4rem 0.8rem;
+      background: #1f4037;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      z-index: 9999;
     }
 
     .info-section {
@@ -110,214 +97,206 @@
     }
 
     .info-card {
-      background-color: white;
-      border-radius: 16px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      background: white;
+      border-radius: 12px;
       padding: 2rem;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
       text-align: center;
-      text-decoration: none;
-      color: #333;
-      animation: fadeInUp 0.8s ease both;
-      position: relative;
-      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
       opacity: 0;
-    }
-
-    body.dark .info-card {
-      background-color: #1f1f1f;
-      color: white;
-    }
-
-    .info-card::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 0;
-      height: 0;
-      background: rgba(0, 0, 0, 0.1);
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      transition: width 0.5s ease, height 0.5s ease;
-    }
-
-    .info-card:active::after {
-      width: 200%;
-      height: 200%;
-    }
-
-    .info-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+      transform: translateY(30px);
     }
 
     .info-card h3 {
-      font-size: 1.4rem;
       color: #1f4037;
-      margin-bottom: 0.6rem;
-      font-family: 'GoogleSans', sans-serif;
+      font-family: 'GoogleSans';
+      margin-bottom: 0.5rem;
     }
 
     .info-card p {
-      font-size: 1rem;
-      color: #555;
-      font-family: 'RobotoMedium', sans-serif;
+      color: #444;
     }
 
     .blog-description {
-      background-color: #f1f3f5;
+      background: #f1f3f5;
       padding: 3rem 1.5rem;
-    }
-
-    .desc-container {
-      max-width: 900px;
-      margin: auto;
       text-align: center;
-      animation: fadeInUp 1s ease;
     }
 
     .blog-description h2 {
-      font-size: 2rem;
       color: #1f4037;
       margin-bottom: 1rem;
-      font-family: 'GoogleSans', sans-serif;
+      font-family: 'GoogleSans';
     }
 
     .blog-description p {
-      font-size: 1rem;
-      color: #555;
-      margin-bottom: 1.2rem;
-      line-height: 1.8;
-      font-family: 'Roboto', sans-serif;
+      max-width: 900px;
+      margin: auto;
+      line-height: 1.6;
     }
 
     footer {
-      background-color: #1f1f2e;
+      background: #1f1f2e;
       color: white;
+      padding: 1.5rem 0;
       text-align: center;
-      padding: 1.5rem 0 2.5rem;
-      font-size: 0.95rem;
-      font-family: 'RobotoMedium', sans-serif;
-      position: relative;
+      font-size: 0.9rem;
     }
 
     #ip-location {
-      margin-top: 1rem;
+      margin-top: 0.8rem;
       font-size: 0.85rem;
-      opacity: 0.85;
+      opacity: 0.8;
     }
 
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    /* Scroll Progress Bar */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      background: #1f4037;
+      z-index: 9999;
+      width: 0%;
     }
 
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 2.2rem;
-      }
+    /* Scroll-to-top button */
+    #scrollTopBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      padding: 10px 14px;
+      background: #1f4037;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      display: none;
+      z-index: 1000;
+    }
 
-      .blog-description h2 {
-        font-size: 1.6rem;
-      }
+    /* Floating Chat/Feedback Button */
+    #feedbackBtn {
+      position: fixed;
+      bottom: 90px;
+      right: 30px;
+      background: #f44336;
+      color: white;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      z-index: 9999;
+    }
+
+    /* Typing animation */
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    /* Fade in cards */
+    .fade-in {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+      transition: all 0.6s ease-in-out;
     }
   </style>
 </head>
 <body>
 
-  <div id="time-display">--:--:--</div>
-  <button class="dark-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+  <div id="scroll-progress"></div>
+  <div id="time-display">--:--</div>
+  <button class="dark-toggle" onclick="toggleDarkMode()">Toggle Mode</button>
+  <button id="scrollTopBtn" onclick="scrollToTop()">↑</button>
+  <button id="feedbackBtn" onclick="location.href='mailto:bhargavtodimela4@gmail.com'">Feedback</button>
 
   <header>
     <h1>Trusted Info</h1>
-    <p>Here we provide content that is 100% trustable.</p>
+    <p id="quote">Loading Quote...</p>
   </header>
 
   <section class="info-section">
     <div class="info-grid">
-      <a href="https://trustedinfo07.blogspot.com/" target="_blank" class="info-card lazy-card">
+      <a href="https://trustedinfo07.blogspot.com/" target="_blank" class="info-card"> 
         <h3>Sourced from Reputable Sources</h3>
-        <p>All the trusted info is available on our Blogger website. Click to explore!</p>
+        <p>All content is available on our Blogger. Explore now!</p>
       </a>
-
-      <div class="info-card lazy-card">
-        <h3>100% Trustable</h3>
-        <p>We verify everything before posting. No clickbait, just facts.</p>
-      </div>
-
-      <div class="info-card lazy-card">
-        <h3>Updated 24/7</h3>
-        <p>Stay informed around the clock with real-time updates.</p>
-      </div>
-
-      <div class="info-card lazy-card">
-        <h3>Live from 22 May 2025</h3>
-        <p>We're launching soon. Stay tuned for accurate and fast news updates!</p>
-      </div>
+      <div class="info-card"><h3>100% Trustable</h3><p>Everything is verified before publishing.</p></div>
+      <div class="info-card"><h3>Updated 24/7</h3><p>Stay informed with real-time updates.</p></div>
+      <div class="info-card"><h3>Live from 22 May 2025</h3><p>We launch soon! Stay tuned.</p></div>
     </div>
   </section>
 
   <section class="blog-description">
-    <div class="desc-container">
-      <h2>What Our Blog Offers</h2>
-      <p>
-        Trusted Info brings you verified news, expert analysis, and genuine updates from a wide range of reliable sources.
-        Whether it's breaking tech developments, trending world affairs, or deep-dive explainers — our blog is crafted to inform,
-        not mislead. We manually cross-check each article before publishing to ensure every post you read is backed by facts and data.
-      </p>
-      <p>
-        The blog is perfect for curious minds, researchers, students, and anyone tired of clickbait. Our goal is to deliver
-        content you can confidently share — every time.
-      </p>
-    </div>
+    <h2>What Our Blog Offers</h2>
+    <p>We bring verified news, deep insights, and reliable information for students, researchers, and curious minds. Our mission is to combat clickbait and promote real knowledge.</p>
   </section>
 
   <footer>
-    &copy; 2025 Premium Content. Built for truth seekers by Bhargav.
+    &copy; 2025 Trusted Info. Built by Bhargav.
     <div id="ip-location">Fetching your IP & location...</div>
   </footer>
 
   <script>
-    function updateClock() {
+    // Time
+    setInterval(() => {
       const now = new Date();
       document.getElementById("time-display").textContent = now.toLocaleTimeString();
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
+    }, 1000);
 
+    // Dark mode
     function toggleDarkMode() {
       document.body.classList.toggle("dark");
     }
 
+    // Scroll progress bar
+    window.addEventListener('scroll', () => {
+      const progress = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      document.getElementById('scroll-progress').style.width = progress + '%';
+    });
+
+    // Scroll-to-top
+    const scrollBtn = document.getElementById("scrollTopBtn");
+    window.onscroll = () => {
+      scrollBtn.style.display = (window.scrollY > 300) ? "block" : "none";
+    };
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     // Lazy load animation
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.style.opacity = 1;
+          entry.target.classList.add("fade-in");
           observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.2 });
 
-    document.querySelectorAll('.lazy-card').forEach(card => observer.observe(card));
+    document.querySelectorAll('.info-card').forEach(el => observer.observe(el));
 
-    // Get user IP and location
+    // Offline Notification
+    window.addEventListener("offline", () => alert("⚠️ You are offline! Some features may not work."));
+
+    // Fetch IP
     fetch("https://ipapi.co/json/")
       .then(res => res.json())
       .then(data => {
-        const ipInfo = `You are from - ${data.ip} (${data.city}, ${data.region}, ${data.country_name})`;
-        document.getElementById("ip-location").textContent = ipInfo;
+        document.getElementById("ip-location").textContent =
+          `You are from - ${data.ip} (${data.city}, ${data.region}, ${data.country_name})`;
+      });
+
+    // Quote of the Day
+    fetch("https://api.quotable.io/random")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("quote").textContent = `"${data.content}" — ${data.author}`;
       })
       .catch(() => {
-        document.getElementById("ip-location").textContent = "Couldn't fetch your IP and location.";
+        document.getElementById("quote").textContent = "Welcome to Trusted Info!";
       });
   </script>
 </body>
