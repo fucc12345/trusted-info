@@ -1,35 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Trusted-info Website</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trusted Info</title>
+
+  <!-- Custom Google Fonts -->
   <style>
+    @font-face {
+      font-family: 'Roboto';
+      src: url('https://fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmWUlfBBc4.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'GoogleSans';
+      src: url('https://fonts.gstatic.com/s/googlesans/v62/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2vgCI.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'RobotoMedium';
+      src: url('https://fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu4mxK.woff2') format('woff2');
+    }
+  </style>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #667eea, #764ba2);
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to right, #f0f2f5, #dbe4f0);
+      color: #333;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: linear-gradient(to right, #1f4037, #99f2c8);
+      color: white;
+      padding: 2.5rem 1rem;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      font-family: 'GoogleSans', sans-serif;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      font-family: 'RobotoMedium', sans-serif;
+    }
+
+    .info-section {
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .info-card {
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      padding: 2rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      color: #333;
+      animation: fadeInUp 0.8s ease both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-card::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(0, 0, 0, 0.1);
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      transition: width 0.5s ease, height 0.5s ease;
+    }
+
+    .info-card:active::after {
+      width: 200%;
+      height: 200%;
+    }
+
+    .info-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    .info-card h3 {
+      font-size: 1.4rem;
+      color: #1f4037;
+      margin-bottom: 0.6rem;
+      font-family: 'GoogleSans', sans-serif;
+    }
+
+    .info-card p {
+      font-size: 1rem;
+      color: #555;
+      font-family: 'RobotoMedium', sans-serif;
+    }
+
+    .blog-description {
+      background-color: #f1f3f5;
+      padding: 3rem 1.5rem;
+    }
+
+    .desc-container {
+      max-width: 900px;
+      margin: auto;
+      text-align: center;
+      animation: fadeInUp 1s ease;
+    }
+
+    .blog-description h2 {
+      font-size: 2rem;
+      color: #1f4037;
+      margin-bottom: 1rem;
+      font-family: 'GoogleSans', sans-serif;
+    }
+
+    .blog-description p {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 1.2rem;
+      line-height: 1.8;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    footer {
+      background-color: #1f1f2e;
       color: white;
       text-align: center;
-      padding: 50px;
+      padding: 1rem 0;
+      font-size: 0.95rem;
+      font-family: 'RobotoMedium', sans-serif;
     }
-    h1 {
-      font-size: 3em;
-      margin-bottom: 0;
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
-    p {
-      font-size: 1.2em;
-    }
-    a {
-      color: #fff;
-      text-decoration: underline;
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2.2rem;
+      }
+
+      .blog-description h2 {
+        font-size: 1.6rem;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Hi, I'm Bhargav 👋</h1>
-  <p>Welcome to my website!</p>
-  <p>More cool stuff coming soon...</p>
-  <p>
-    <a href="mailto:bhargavtodimela4@gmail.com">Contact Me</a>
-  </p>
+
+  <header>
+    <h1>Trusted Info</h1>
+    <p>Here we provide content that is 100% trustable.</p>
+  </header>
+
+  <section class="info-section">
+    <div class="info-grid">
+
+      <a href="https://trustedinfo07.blogspot.com/" target="_blank" class="info-card">
+        <h3>Sourced from Reputable Sources</h3>
+        <p>All the trusted info is available on our Blogger website. Click to explore!</p>
+      </a>
+
+      <div class="info-card">
+        <h3>100% Trustable</h3>
+        <p>We verify everything before posting. No clickbait, just facts.</p>
+      </div>
+
+      <div class="info-card">
+        <h3>Updated 24/7</h3>
+        <p>Stay informed around the clock with real-time updates.</p>
+      </div>
+
+      <div class="info-card">
+        <h3>Live from 22 May 2025</h3>
+        <p>We're launching soon. Stay tuned for accurate and fast news updates!</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="blog-description">
+    <div class="desc-container">
+      <h2>What Our Blog Offers</h2>
+      <p>
+        Trusted Info brings you verified news, expert analysis, and genuine updates from a wide range of reliable sources.
+        Whether it's breaking tech developments, trending world affairs, or deep-dive explainers — our blog is crafted to inform,
+        not mislead. We manually cross-check each article before publishing to ensure every post you read is backed by facts and data.
+      </p>
+      <p>
+        The blog is perfect for curious minds, researchers, students, and anyone tired of clickbait. Our goal is to deliver
+        content you can confidently share — every time.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Premium Content. Built for truth seekers by Bhargav.
+  </footer>
+
 </body>
 </html>
