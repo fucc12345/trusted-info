@@ -34,6 +34,47 @@
       color: #333;
       line-height: 1.6;
       overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.dark {
+      background: #121212;
+      color: #f0f0f0;
+    }
+
+    #time-display {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 1rem;
+      font-family: 'RobotoMedium';
+      background: rgba(255, 255, 255, 0.6);
+      padding: 0.3rem 0.7rem;
+      border-radius: 8px;
+      z-index: 999;
+    }
+
+    body.dark #time-display {
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .dark-toggle {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 0.9rem;
+      font-family: 'RobotoMedium';
+      background: #1f4037;
+      color: white;
+      border: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 999;
+    }
+
+    .dark-toggle:hover {
+      background: #16342c;
     }
 
     header {
@@ -81,6 +122,12 @@
       animation: fadeInUp 0.8s ease both;
       position: relative;
       overflow: hidden;
+      opacity: 0;
+    }
+
+    body.dark .info-card {
+      background-color: #1f1f1f;
+      color: white;
     }
 
     .info-card::after {
@@ -150,9 +197,16 @@
       background-color: #1f1f2e;
       color: white;
       text-align: center;
-      padding: 1rem 0;
+      padding: 1.5rem 0 2.5rem;
       font-size: 0.95rem;
       font-family: 'RobotoMedium', sans-serif;
+      position: relative;
+    }
+
+    #ip-location {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      opacity: 0.85;
     }
 
     @keyframes fadeInUp {
@@ -179,6 +233,9 @@
 </head>
 <body>
 
+  <div id="time-display">--:--:--</div>
+  <button class="dark-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+
   <header>
     <h1>Trusted Info</h1>
     <p>Here we provide content that is 100% trustable.</p>
@@ -186,27 +243,25 @@
 
   <section class="info-section">
     <div class="info-grid">
-
-      <a href="https://trustedinfo07.blogspot.com/" target="_blank" class="info-card">
+      <a href="https://trustedinfo07.blogspot.com/" target="_blank" class="info-card lazy-card">
         <h3>Sourced from Reputable Sources</h3>
         <p>All the trusted info is available on our Blogger website. Click to explore!</p>
       </a>
 
-      <div class="info-card">
+      <div class="info-card lazy-card">
         <h3>100% Trustable</h3>
         <p>We verify everything before posting. No clickbait, just facts.</p>
       </div>
 
-      <div class="info-card">
+      <div class="info-card lazy-card">
         <h3>Updated 24/7</h3>
         <p>Stay informed around the clock with real-time updates.</p>
       </div>
 
-      <div class="info-card">
+      <div class="info-card lazy-card">
         <h3>Live from 22 May 2025</h3>
         <p>We're launching soon. Stay tuned for accurate and fast news updates!</p>
       </div>
-
     </div>
   </section>
 
@@ -227,7 +282,43 @@
 
   <footer>
     &copy; 2025 Premium Content. Built for truth seekers by Bhargav.
+    <div id="ip-location">Fetching your IP & location...</div>
   </footer>
 
+  <script>
+    function updateClock() {
+      const now = new Date();
+      document.getElementById("time-display").textContent = now.toLocaleTimeString();
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+    }
+
+    // Lazy load animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.lazy-card').forEach(card => observer.observe(card));
+
+    // Get user IP and location
+    fetch("https://ipapi.co/json/")
+      .then(res => res.json())
+      .then(data => {
+        const ipInfo = `You are from - ${data.ip} (${data.city}, ${data.region}, ${data.country_name})`;
+        document.getElementById("ip-location").textContent = ipInfo;
+      })
+      .catch(() => {
+        document.getElementById("ip-location").textContent = "Couldn't fetch your IP and location.";
+      });
+  </script>
 </body>
 </html>
