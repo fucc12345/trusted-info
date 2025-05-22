@@ -1,90 +1,223 @@
-/* Root level transitions and accessibility improvements */
 :root {
-  --transition-duration: 280ms;
-  --elevation-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
-  --elevation-shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.2);
-  --ripple-color: rgba(0, 0, 0, 0.15);
+  --primary-color: #1f4037;
+  --accent-color: #99f2c8;
+  --bg-gradient: linear-gradient(to right, #f0f2f5, #dbe4f0);
+  --dark-bg: #121212;
+  --glass-bg: rgba(255, 255, 255, 0.2);
+  --glass-blur: blur(12px);
+  --transition-speed: 300ms;
+  --elevate: 0 6px 24px rgba(0, 0, 0, 0.15);
+  --font-main: 'Roboto', sans-serif;
+  --font-display: 'GoogleSans', sans-serif;
 }
 
-/* Global smooth transitions for UI consistency */
-body, button, a, .info-card {
-  transition: all var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1);
+/* Base Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
-/* Material-like hover elevation for cards */
-.info-card:hover {
-  box-shadow: var(--elevation-shadow-hover);
-  transform: translateY(-4px);
+body {
+  font-family: var(--font-main);
+  background: var(--bg-gradient);
+  color: #333;
+  transition: background var(--transition-speed), color var(--transition-speed);
+  overflow-x: hidden;
 }
 
-/* Button elevation and ripple effect mimic */
-button,
-#scrollTopBtn,
-#feedbackBtn,
-.dark-toggle {
+body.dark {
+  background: var(--dark-bg);
+  color: #f0f0f0;
+}
+
+/* Header */
+header {
+  background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+  color: white;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  box-shadow: var(--elevate);
+}
+
+header h1 {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
   position: relative;
-  overflow: hidden;
 }
 
-button::after,
-#scrollTopBtn::after,
-#feedbackBtn::after,
-.dark-toggle::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  width: 100px;
-  height: 100px;
-  background: var(--ripple-color);
-  top: 50%;
-  left: 50%;
-  pointer-events: none;
-  transform: scale(0);
+header h1::after {
+  content: '|';
+  animation: blink-caret 0.75s step-end infinite;
+  margin-left: 5px;
+}
+
+header h1.typing-done::after {
   opacity: 0;
-  transition: transform 0.4s, opacity 0.8s;
 }
 
-button:active::after,
-#scrollTopBtn:active::after,
-#feedbackBtn:active::after,
-.dark-toggle:active::after {
-  transform: scale(2.5);
-  opacity: 0.2;
-  transition: 0s;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
+header p {
+  margin-top: 0.7rem;
+  font-size: 1.1rem;
+  font-family: var(--font-main);
 }
 
-/* Info card fade-in animation (already supported via JS, refined here) */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Glassy Info Cards */
+.info-grid {
+  display: grid;
+  gap: 2rem;
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: auto;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.info-card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: var(--elevate);
+  transition: transform var(--transition-speed), opacity 0.4s ease-out;
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.info-card h3 {
+  font-family: var(--font-display);
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.info-card p {
+  color: #444;
+}
+
+body.dark .info-card {
+  background: rgba(30, 30, 30, 0.4);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+}
+
+body.dark .info-card h3 {
+  color: var(--accent-color);
 }
 
 .fade-in {
-  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
-/* Typing cursor blink — matches Material-style carets */
-@keyframes blink-caret {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+/* Buttons */
+button,
+#feedbackBtn,
+#scrollTopBtn,
+.dark-toggle {
+  font-family: var(--font-main);
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
-/* Scroll progress bar transition */
+button:hover,
+#feedbackBtn:hover,
+#scrollTopBtn:hover,
+.dark-toggle:hover {
+  background: #162d26;
+  transform: translateY(-2px);
+}
+
+#scrollTopBtn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  font-size: 18px;
+  border-radius: 50%;
+  padding: 12px 14px;
+  display: none;
+  z-index: 1000;
+}
+
+#feedbackBtn {
+  position: fixed;
+  bottom: 90px;
+  right: 30px;
+  z-index: 999;
+}
+
+/* Scroll Progress Bar */
 #scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 5px;
+  background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+  width: 0%;
+  z-index: 9999;
   transition: width 0.2s ease-out;
 }
 
-/* Light hover feedback for accessibility */
-a:hover,
-button:hover {
-  filter: brightness(1.05);
+/* Blog Description */
+.blog-description {
+  padding: 4rem 2rem;
+  text-align: center;
+  background: #f1f3f5;
+}
+
+.blog-description h2 {
+  font-family: var(--font-display);
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.blog-description p {
+  max-width: 800px;
+  margin: auto;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+body.dark .blog-description {
+  background: #222;
+}
+
+footer {
+  background: #1f1f2e;
+  color: white;
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.9rem;
+}
+
+body.dark footer {
+  background: #0e0e18;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #eee;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 5px;
+}
+body.dark ::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+body.dark ::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+}
+
+/* Blinking cursor */
+@keyframes blink-caret {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
 }
