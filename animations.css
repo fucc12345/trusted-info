@@ -221,3 +221,34 @@ body.dark ::-webkit-scrollbar-thumb {
   from, to { opacity: 1; }
   50% { opacity: 0; }
 }
+/* ===============================
+   MATERIAL RIPPLE EFFECT STYLES
+   =============================== */
+
+.ripple {
+  position: relative;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.ripple span.ripple-effect {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple-animation 600ms linear;
+  background: rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  z-index: 1;
+}
+
+body.dark .ripple span.ripple-effect {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
